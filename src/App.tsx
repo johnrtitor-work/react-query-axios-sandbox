@@ -41,9 +41,9 @@ function ListUsers() {
     <div>
       <h2>List of users</h2>
       <ol>
-        {users.map((user) => {
-          <li key={user.id}>{user.name}</li>;
-        })}
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
       </ol>
     </div>
   );
