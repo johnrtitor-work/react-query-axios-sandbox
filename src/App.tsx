@@ -17,7 +17,12 @@ function App() {
 }
 
 function ListUsers() {
-  const { isPending, error, data, isFetching } = useQuery({
+  const {
+    isPending,
+    error,
+    data: users,
+    isFetching,
+  } = useQuery({
     // queryKey is like an internal unique identifier for this query,
     // if we reuse the query elsewhere, it will reuse the cached data
     queryKey: ["usersData"],
@@ -32,12 +37,15 @@ function ListUsers() {
   if (isPending) return "Loading....";
   if (error) return "An error has occurred" + error.message;
 
-  console.log(data);
-
   return (
-    <>
+    <div>
       <h2>List of users</h2>
-    </>
+      <ol>
+        {users.map((user) => {
+          <li key={user.id}>{user.name}</li>;
+        })}
+      </ol>
+    </div>
   );
 }
 
