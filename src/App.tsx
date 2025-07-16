@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 import "./App.css";
 
 // create a client
@@ -7,15 +11,32 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <HelloWorld />
+      <ListUsers />
     </QueryClientProvider>
   );
 }
 
-function HelloWorld() {
+function ListUsers() {
+  const { isPending, error, data, isFetching } = useQuery({
+    // queryKey is like an internal unique identifier for this query,
+    // if we reuse the query elsewhere, it will reuse the cached data
+    queryKey: ["usersData"],
+    queryFn: async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users",
+      );
+      return await response.json();
+    },
+  });
+
+  if (isPending) return "Loading....";
+  if (error) return "An error has occurred" + error.message;
+
+  console.log(data);
+
   return (
     <>
-      <h2>Hello World</h2>
+      <h2>List of users</h2>
     </>
   );
 }
