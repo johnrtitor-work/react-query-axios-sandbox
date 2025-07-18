@@ -52,7 +52,22 @@ export default function ListUsers() {
       <h2>List of users</h2>
       <ol>
         {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <>
+            <li key={user.id}>
+              {user.name} (@{user.username})
+              <ul>
+                <li>Phone: {user.phone} </li>
+                <li>Email: {user.email} </li>
+                <li>
+                  Address: {user.address.street}, {user.address.suit},{" "}
+                  {user.address.city}-{user.address.zipcode} (
+                  {user.address.geo.lat}, {user.address.geo.lng})
+                </li>
+                <li>Company: {user.company.name}</li>
+              </ul>
+            </li>
+            <br />
+          </>
         ))}
       </ol>
     </div>
