@@ -31,7 +31,6 @@ export default function ListUsers() {
     isPending,
     error,
     data: users,
-    isFetching,
   } = useQuery<User[]>({
     // queryKey is like an internal unique identifier for this query,
     // if we reuse the query elsewhere, it will reuse the cached data
