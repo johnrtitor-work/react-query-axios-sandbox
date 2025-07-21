@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 // the API returns an array of object User
 type User = {
@@ -8,7 +9,7 @@ type User = {
   email: string;
   address: {
     street: string;
-    suit: string;
+    suite: string;
     city: string;
     zipcode: string;
     geo: {
@@ -31,15 +32,15 @@ export default function ListUsers() {
     isPending,
     error,
     data: users,
-  } = useQuery<User[]>({
+  } = useQuery({
     // queryKey is like an internal unique identifier for this query,
     // if we reuse the query elsewhere, it will reuse the cached data
     queryKey: ["usersData"],
     queryFn: async () => {
-      const response = await fetch(
+      const response = await axios.get<User[]>(
         "https://jsonplaceholder.typicode.com/users",
       );
-      return await response.json();
+      return response.data;
     },
   });
 
@@ -58,7 +59,7 @@ export default function ListUsers() {
                 <li>Phone: {user.phone} </li>
                 <li>Email: {user.email} </li>
                 <li>
-                  Address: {user.address.street}, {user.address.suit},{" "}
+                  Address: {user.address.street}, {user.address.suite},{" "}
                   {user.address.city}-{user.address.zipcode} (
                   {user.address.geo.lat}, {user.address.geo.lng})
                 </li>
